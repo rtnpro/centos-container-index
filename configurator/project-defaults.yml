@@ -1,0 +1,18 @@
+- job-template:
+    name: '{ci-project}-{jobname}'
+    description: |
+        Managed by Jenkins Job Builder, do not edit manually!
+    node: "{ci-project}"
+    builders:
+        - shell: |
+            #!/bin/bash
+            echo "duffy {ci-project} {centos_ver} {centos_arch} {test_suite_url}"
+            echo "./run.sh {rundotshargs}"
+            echo "DONE"
+
+- job-group:
+    name: ci.centos.org-rundotsh-job
+    jobs:
+        - '{ci-project}-{jobname}'
+
+
