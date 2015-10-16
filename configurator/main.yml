@@ -19,7 +19,7 @@
             done
             popd
             
-            jenkins-jobs update -r $WORKSPACE/jjb-jobs/project-defaults.yml:$WORKSPACE/{ci-project}
+            jenkins-jobs update -r $WORKSPACE/jjb-jobs/configurator/project-defaults.yml:$WORKSPACE/{ci-project}
 
 - project:
     name: ci.centos.org
