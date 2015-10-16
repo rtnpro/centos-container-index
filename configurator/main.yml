@@ -1,5 +1,11 @@
 - job-template:
     name: 'ci_build_{ci-project}'
+    scm:
+        - git:
+            url: 'https://github.com/bstinsonmhk/ci-index.git'
+            branches:
+                - origin/master
+            basedir: jjb-jobs
     builders:
         - shell: |
             #!/bin/bash
