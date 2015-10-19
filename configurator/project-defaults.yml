@@ -23,7 +23,7 @@
             import json, urllib, subprocess, sys
 
             url_base="http://admin.ci.centos.org:8080"
-            api="ADD YOUR API KEY HERE"
+            api="{duffy_key}"
             ver="{centos_ver}"
             arch="{centos_arch}"
             count=1
