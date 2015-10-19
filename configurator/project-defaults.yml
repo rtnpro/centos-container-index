@@ -3,6 +3,10 @@
     description: |
         Managed by Jenkins Job Builder, do not edit manually!
     node: "{ci_project}"
+    scm:
+        - git:
+            url: "{git_url}"
+    triggers:
     node: "{ci-project}"
     builders:
         - python: |
