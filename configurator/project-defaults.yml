@@ -6,8 +6,9 @@
     scm:
         - git:
             url: "{git_url}"
+            skip-tag: True
     triggers:
-    node: "{ci-project}"
+        - pollscm: "H/10 * * * *" 
     builders:
         - python: |
             # This script uses the Duffy node management api to get fresh machines to run
