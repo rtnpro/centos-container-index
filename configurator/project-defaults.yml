@@ -2,6 +2,7 @@
     name: '{ci_project}-{name}'
     description: |
         Managed by Jenkins Job Builder, do not edit manually!
+    node: "{ci_project}"
     node: "{ci-project}"
     builders:
         - python: |
