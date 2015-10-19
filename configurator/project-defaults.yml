@@ -1,5 +1,5 @@
 - job-template:
-    name: '{ci-project}-{jobname}'
+    name: '{ci_project}-{name}'
     description: |
         Managed by Jenkins Job Builder, do not edit manually!
     node: "{ci-project}"
@@ -41,6 +41,4 @@
 - job-group:
     name: ci.centos.org-rundotsh-job
     jobs:
-        - '{ci-project}-{jobname}'
-
-
+        - '{ci_project}-{name}'
