@@ -2,7 +2,7 @@
     name: 'ci_build_{ci-project}'
     scm:
         - git:
-            url: 'https://github.com/bstinsonmhk/ci-index.git'
+            url: 'https://github.com/rtnpro/container-index.git'
             branches:
                 - origin/master
             basedir: jjb-jobs
