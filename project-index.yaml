@@ -1,2 +1,2 @@
-rtnpro:
+container:
     - https://github.com/rtnpro/centos-docker-httpd
