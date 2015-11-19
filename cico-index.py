@@ -59,6 +59,7 @@ def projectify(data, project, giturl):
 
     for idx, block in enumerate(data):
         for section in block:
+            block[section]['namespace'] = project
             block[section]['jobname'] = block[section]['name']
             block[section]['ci_project'] = project
             block[section]['git_url'] = giturl
