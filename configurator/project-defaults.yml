@@ -40,13 +40,12 @@
             for h in b['hosts']:
                 cmd=(
                     "ssh -t -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@%s '"
-                    "yum -y install git docker && "
+                    "yum -y install git docker epel-release && "
+                    "yum -y install atomic-reactor && "
                     "service docker start && "
-                    "git clone %s tests && cd tests && "
-                    "docker build -t %s . && "
-                    "docker tag -f %s %s"
+                    "atomic-reactor build git --method here --image %s --uri \"%s\""
                     "'"
-                ) % (h, git_url, image_name, image_name, image_name)
+                ) % (h, image_name, git_url)
 
                 print cmd
                 rtn_code=subprocess.call(cmd, shell=True)
