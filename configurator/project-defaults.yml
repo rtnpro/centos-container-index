@@ -2,7 +2,6 @@
     name: '{ci_project}-{name}'
     description: |
         Managed by Jenkins Job Builder, do not edit manually!
-    node: "{ci_project}"
     scm:
         - git:
             url: "{git_url}"
@@ -23,7 +22,7 @@
 
             import json, urllib, subprocess, sys
 
-            url_base = "http://admin.ci.centos.org:8080"
+            # url_base = "http://admin.ci.centos.org:8080"
             api = "{duffy_key}"
             ver = "{centos_ver}"
             arch = "{centos_arch}"
@@ -33,25 +32,32 @@
             image_version = "{image_version}"
             image_tag = "%s:%s" % (image_name, image_version)
 
-            get_nodes_url="%s/Node/get?key=%s&ver=%s&arch=%s&i_count=%s" % (url_base,api,ver,arch,count)
+            # get_nodes_url="%s/Node/get?key=%s&ver=%s&arch=%s&i_count=%s" % (url_base,api,ver,arch,count)
 
-            dat=urllib.urlopen(get_nodes_url).read()
-            b=json.loads(dat)
+            # dat=urllib.urlopen(get_nodes_url).read()
+            # b=json.loads(dat)
+
+            target_repositories = ['localhost:5000']
+
+            b = dict(hosts=['localhost'])
             for h in b['hosts']:
                 cmd=(
-                    "ssh -t -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@%s '"
+                    "ssh -t -i /var/lib/jenkins/ssh_private_key "
+                    "-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@%s '"
                     "yum -y install git docker epel-release && "
                     "yum -y install atomic-reactor && "
                     "service docker start && "
-                    "atomic-reactor build git --method here --image %s --uri \"%s\""
+                    "atomic-reactor build git --method here --image %s "
+                    "--target-registries %s --target-registries-insecure "
+                    "--uri \"%s\""
                     "'"
-                ) % (h, image_name, git_url)
+                ) % (h, image_tag, " ".join(target_repositories), git_url)
 
                 print cmd
                 rtn_code=subprocess.call(cmd, shell=True)
 
-            done_nodes_url="%s/Node/done?key=%s&ssid=%s" % (url_base, api, b['ssid'])
-            das=urllib.urlopen(done_nodes_url).read()
+            # done_nodes_url="%s/Node/done?key=%s&ssid=%s" % (url_base, api, b['ssid'])
+            # das=urllib.urlopen(done_nodes_url).read()
 
             sys.exit(rtn_code)
 
