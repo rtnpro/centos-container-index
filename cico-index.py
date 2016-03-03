@@ -100,6 +100,7 @@ def main(projects):
 
                 # run jenkins job builder
                 myargs = ['jenkins-jobs',
+                          '--ignore-cache',
                           'update',
                           ':'.join([jjb_defaults_file, generated_filename])
                           ]
