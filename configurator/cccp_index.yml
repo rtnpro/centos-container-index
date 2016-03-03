@@ -2,6 +2,7 @@
     name: 'cccp-index'
     description: |
         Managed by Jenkins Job Builder, do not edit manually!
+    node: master
     scm:
         - git:
             url: "https://github.com/rtnpro/centos-container-index.git"
@@ -10,5 +11,6 @@
         - pollscm: "H/10 * * * *" 
     builders:
         - shell: |
+            cp keystore.yml.sample keystore.yml
             python cico-index.py
 
