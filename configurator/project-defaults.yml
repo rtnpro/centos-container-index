@@ -3,10 +3,6 @@
     description: |
         Managed by Jenkins Job Builder, do not edit manually!
     node: oc-slave
-    scm:
-        - git:
-            url: "{git_url}"
-            skip-tag: True
     triggers:
         - pollscm: "H/10 * * * *" 
     builders:
