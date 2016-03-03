@@ -1,0 +1,14 @@
+- job:
+    name: 'cccp-index'
+    description: |
+        Managed by Jenkins Job Builder, do not edit manually!
+    scm:
+        - git:
+            url: "https://github.com/rtnpro/centos-container-index.git"
+            skip-tag: True
+    triggers:
+        - pollscm: "H/10 * * * *" 
+    builders:
+        - shell: |
+            python cico_index.py
+
