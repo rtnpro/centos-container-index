@@ -14,6 +14,7 @@ jjb_defaults_file = 'configurator/project-defaults.yml'
 required_attrs = ['image_name', 'image_version']
 optional_attrs = ['rundotshargs']
 overwritten_attrs = ['jobname', 'git_url', 'ci_project', 'jobs']
+duffy_keys = {}
 
 # TODO: Pull this directly from duffy
 
@@ -64,7 +65,6 @@ def projectify(data, project, giturl):
             block[section]['ci_project'] = project
             block[section]['git_url'] = giturl
             block[section]['jobs'] = ['ci.centos.org-rundotsh-job']
-            block[section]['duffy_key'] = get_duffy_key(project)
 
             if 'rundotshargs' not in block[section]:
                 block[section]['rundotshargs'] = ''
@@ -114,7 +114,6 @@ def main(projects):
 
 
 if __name__ == '__main__':
-    duffy_keys = load_duffy_keys()
     with open('project-index.yaml') as projectfile:
         projects = yaml.load(projectfile)
         main(projects)
