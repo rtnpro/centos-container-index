@@ -55,7 +55,7 @@ def get_duffy_key(project):
     return duffy_keys[project]
 
 
-def projectify(data, project, giturl):
+def projectify(data, project, giturl, relpath):
     lint(data)
 
     for idx, block in enumerate(data):
@@ -64,6 +64,7 @@ def projectify(data, project, giturl):
             block[section]['jobname'] = block[section]['name']
             block[section]['ci_project'] = project
             block[section]['git_url'] = giturl
+            block[section]['rel_path'] = relpath or '/'
             block[section]['jobs'] = ['ci.centos.org-rundotsh-job']
 
             if 'rundotshargs' not in block[section]:
@@ -77,26 +78,30 @@ def main(projects):
     for projectname in projects:
         print "{} {} {}".format("="*10, projectname, "="*10)
 
-        for giturl in projects[projectname]:
+        for path in projects[projectname]:
             try:
                 t = tempfile.mkdtemp()
                 print "creating: {}".format(t)
+                path_words = path.split('::')
+                giturl = path_words[0]
+                relpath = path_words[1] if len(path_words) > 1 else ''
 
                 # clone the repo from the indx
                 git.Repo.clone_from(giturl, t)
+                workdir = os.path.join(t, relpath)
 
                 # read in the ci defs from the yaml file in their project root
-                with open(os.path.join(t, 'ci.centos.org.yaml')) as datafile:
+                with open(os.path.join(workdir, 'ci.centos.org.yaml')) as datafile:
                     data = yaml.load(datafile)
 
                 generated_filename = os.path.join(
-                    t,
+                    workdir,
                     'ci.centos.org_GENERATED.yaml'
                 )
 
                 # overwrite any attributes we care about see: projectify
                 with open(generated_filename, 'w') as outfile:
-                    yaml.dump(projectify(data, projectname, giturl), outfile)
+                    yaml.dump(projectify(data, projectname, giturl, relpath), outfile)
 
                 # run jenkins job builder
                 myargs = ['jenkins-jobs',
