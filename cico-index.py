@@ -109,7 +109,6 @@ def main(projects):
                           'update',
                           ':'.join([jjb_defaults_file, generated_filename])
                           ]
-                print myargs
                 proc = subprocess.Popen(myargs,
                                         stdout=subprocess.PIPE)
                 proc.communicate()
