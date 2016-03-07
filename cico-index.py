@@ -64,7 +64,8 @@ def projectify(data, project, giturl, relpath):
             block[section]['jobname'] = block[section]['name']
             block[section]['ci_project'] = project
             block[section]['git_url'] = giturl
-            block[section]['rel_path'] = relpath or '/'
+            block[section]['rel_path'] = ('/' + relpath) \
+                if (relpath and not relpath.startswith('/')) else '/'
             block[section]['jobs'] = ['ci.centos.org-rundotsh-job']
 
             if 'rundotshargs' not in block[section]:
