@@ -11,5 +11,5 @@
         - pollscm: "H/10 * * * *" 
     builders:
         - shell: |
-            python cico-index.py
+            python cccp-index.py
 
